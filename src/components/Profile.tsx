@@ -11,6 +11,7 @@ export default function Profile() {
   const updateState = () => {
     dispatch(setProfileOptions({ edu: edu, exp: exp, res: res }));
   };
+
   return (
     <div className="card">
       <p>Profile</p>
