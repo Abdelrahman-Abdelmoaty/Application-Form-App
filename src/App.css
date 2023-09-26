@@ -1,0 +1,109 @@
+/* header {
+  display: flex;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  width: 100%;
+  margin: 80px 0;
+}
+header div {
+  position: relative;
+  text-align: center;
+  padding: 50px 100px;
+  width: 25%;
+}
+
+header div:not(:last-of-type)::after {
+  background-color: #eee;
+  content: "";
+  height: 80px;
+  top: 50%;
+  transform: translateY(-40px);
+  right: 0;
+  width: 2px;
+  position: absolute;
+}
+
+header div.active {
+  background-color: #00635b;
+  color: #fff;
+}
+
+header div.active::after {
+  background-color: #00635b;
+  content: "";
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  right: -6px;
+  top: 40px;
+  transform: translate;
+  transform: rotate(45deg);
+  z-index: -1;
+}
+
+.sidebar {
+  align-items: center;
+  background-color: #fff;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  height: 100vh;
+  position: fixed;
+  display: none;
+  top: 0;
+  width: 80px;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+.sidebar ul li {
+  margin-bottom: 10px;
+}
+
+.sidebar svg {
+  width: 30px;
+}
+
+.sidebar > div:nth-of-type(1) {
+  margin: 20px 0;
+}
+
+.sidebar > div:nth-of-type(3) {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.sidebar > div:nth-of-type(3) div {
+  background-color: #00635b;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px;
+}
+
+.sidebar > div:nth-of-type(3) div:hover,
+.sidebar svg:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.card {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-radius: 20px;
+  width: 600px;
+  margin-bottom: 50px;
+}
+
+.card p {
+  border-radius: 20px 20px 0 0;
+  background-color: #d0f7fa;
+  font-weight: 600;
+  font-size: 1.5rem;
+  padding: 20px;
+}
+ */

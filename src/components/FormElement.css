@@ -1,0 +1,75 @@
+.formElement {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.formElement label {
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.formElement input[type="text"] {
+  font-weight: 600;
+  border-width: 0 0 1px 0;
+  outline: none;
+  border-color: #c4c4c4;
+  margin-bottom: 25px;
+  font-size: 1rem;
+  padding: 5px;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 10px;
+  position: absolute;
+  right: 20px;
+}
+.options input[type="checkbox"]:nth-of-type(1) {
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+  position: relative;
+}
+.options input[type="checkbox"]:nth-of-type(1):checked {
+  accent-color: #73e8f0;
+}
+.options input[type="checkbox"]:nth-of-type(2) {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+
+.options label:nth-of-type(2) {
+  cursor: pointer;
+  background: #fff;
+  border-radius: 100px;
+  position: relative;
+  border: 1px #c4c4c4 solid;
+  width: 50px;
+  height: 26px;
+  display: block;
+}
+.options label:nth-of-type(2) span {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: #cccccc;
+  border-radius: 90px;
+  transition: 0.3s;
+}
+
+.options label:nth-of-type(2).active {
+  background-color: #73e8f0;
+}
+.options label:nth-of-type(2) span.activeToggler {
+  transform: translateX(calc(100% + 2px));
+  background-color: #fff;
+}
+
+.options label:nth-of-type(3) {
+  width: 50px;
+}
