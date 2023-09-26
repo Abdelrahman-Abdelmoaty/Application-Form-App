@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useMemo, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import uuid from "react-uuid";
 import { deleteQuestion, setQuestions } from "../../App/DataSlice";

@@ -4,7 +4,7 @@ import { sendDataDisaptch } from "./App/DataSlice";
 export default function SendData() {
   const dispatch = useDispatch();
   const handleSubmit = () => {
-    dispatch(sendDataDisaptch("sucess"));
+    dispatch(sendDataDisaptch());
   };
   return (
     <div>
