@@ -1,61 +1,54 @@
-import { useRef, useState } from "react";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 import "./AddAQuestion.css";
 import Paragraph from "./Paragraph";
 import MultipleChoice from "./MultipleChoice";
+import uuid from "react-uuid";
+import { Question } from "../../App/PersonalInformationSlice";
 
-export default function AddAQuestion({ type }: { type: string }) {
-  const [questions, setQuestions] = useState<JSX.Element[]>([]);
+export default function AddAQuestion({ data, setter }: { data: Question[]; setter: Dispatch<SetStateAction<{ question: Question; delete: boolean }>> }) {
+  let oldQuestions: JSX.Element[] = [];
+  data.length &&
+    (oldQuestions = data.map((question) => {
+      switch (question.type) {
+        case "Paragraph":
+          return <Paragraph key={question.id} setter={setter} data={question} />;
+
+        default:
+          return <></>;
+      }
+    }));
+  const [questions, setQuestions] = useState<JSX.Element[]>(oldQuestions);
   const selection = useRef<HTMLSelectElement>(null);
-  const addNewQuestion = () => {
+
+  function addNewQuestion() {
     const value = selection.current?.value;
+    const ID = uuid();
     switch (value) {
-      case "paragraph":
-        setQuestions((prev) => [...prev, <Paragraph type={type} key={`${crypto.randomUUID()}`} />]);
-        break;
-      case "shortAnswer":
-        setQuestions((prev) => [...prev, <Paragraph type={type} key={`${crypto.randomUUID()}`} />]);
-        break;
-      case "yes/no":
-        setQuestions((prev) => [...prev, <Paragraph type={type} key={`${crypto.randomUUID()}`} />]);
-        break;
-      case "dropdown":
-        setQuestions((prev) => [...prev, <Paragraph type={type} key={`${crypto.randomUUID()}`} />]);
-        break;
-      case "multipleChoice":
-        setQuestions((prev) => [...prev, <MultipleChoice type={type} key={`${crypto.randomUUID()}`} />]);
-        break;
-      case "date":
-        setQuestions((prev) => [...prev, <Paragraph type={type} key={`${crypto.randomUUID()}`} />]);
-        break;
-      case "number":
-        setQuestions((prev) => [...prev, <Paragraph type={type} key={`${crypto.randomUUID()}`} />]);
-        break;
-      case "fileUpload":
-        setQuestions((prev) => [...prev, <Paragraph type={type} key={`${crypto.randomUUID()}`} />]);
-        break;
-      case "videoQuestion":
-        setQuestions((prev) => [...prev, <Paragraph type={type} key={`${crypto.randomUUID()}`} />]);
+      case "Paragraph":
+        setQuestions((prev) => [...prev, <Paragraph key={ID} setter={setter} data={{ id: ID, type: "Paragraph", question: "", choices: [], maxChoice: 0, disqualify: false, other: false }} />]);
         break;
     }
-  };
+  }
 
   return (
     <div className="addAQuestion">
       <p className="font-semibold text-2xl mb-2">Questions</p>
+      {/* PUT QUESTIONS HERE */}
       <div className="question-section">{questions}</div>
+      {/* #################### */}
       <div className="question-selection">
         <label>Type</label>
         <select name="questions" className="question-select" ref={selection}>
           <option value="">--Please choose an option--</option>
-          <option value="paragraph">Paragraph</option>
-          <option value="shortAnswer">Short answer</option>
-          <option value="yes/no">Yes/No</option>
-          <option value="dropdown">Dropdown</option>
-          <option value="multipleChoice">Multiple choice</option>
-          <option value="date">Date</option>
-          <option value="number">Number</option>
-          <option value="fileUpload">File upload</option>
-          <option value="videoQuestion">Video question</option>
+          <option value="Paragraph">Paragraph</option>
+          <option value="ShortAnswer">Short answer</option>
+          <option value="Yes/no">Yes/No</option>
+          <option value="Dropdown">Dropdown</option>
+          <option value="MultipleChoice">Multiple choice</option>
+          <option value="Date">Date</option>
+          <option value="Number">Number</option>
+          <option value="FileUpload">File upload</option>
+          <option value="VideoQuestion">Video question</option>
         </select>
       </div>
       <button className="add-question-btn" onClick={addNewQuestion}>

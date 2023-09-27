@@ -1,11 +1,12 @@
 import { useRef, useState } from "react";
 import "../App.css";
-import { setCoverImageUrl } from "../App/DataSlice";
-import { useAppDispatch } from "../App/Store";
+import { useAppDispatch, useAppSelector } from "../App/Store";
+import { setCoverImage } from "../App/CoverImageSlice";
 
 function UploadProfileImage() {
   const dispatch = useAppDispatch();
-  const [uploadedImageUrl, setUploadedImageUrl] = useState<string>("");
+  const imageUrl = useAppSelector((state) => state.coverImage);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState<string>(imageUrl);
   const uploadBtn = useRef<HTMLInputElement>(null);
   const handleUpload = () => {
     uploadBtn.current?.click();
@@ -19,7 +20,7 @@ function UploadProfileImage() {
       }
       const imageURL = URL.createObjectURL(selectedImage);
       setUploadedImageUrl(imageURL);
-      dispatch(setCoverImageUrl(imageURL.slice(imageURL.indexOf(":") + 1)));
+      dispatch(setCoverImage(imageURL.slice(imageURL.indexOf(":") + 1)));
     }
   };
   const handleRemove = () => {

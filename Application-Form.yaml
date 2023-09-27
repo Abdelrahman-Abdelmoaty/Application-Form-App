@@ -149,9 +149,6 @@ components:
         id: 4y1th3rznzv2v
       type: object
       properties:
-        value:
-          type: string;
-          default: ""
         internalUse:
           type: boolean
           default: false

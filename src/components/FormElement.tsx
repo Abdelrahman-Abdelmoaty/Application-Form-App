@@ -1,41 +1,54 @@
-import { useDispatch } from "react-redux";
 import "./FormElement.css";
-import { useRef, useState } from "react";
-import { Data, setPersonalProp } from "../App/DataSlice";
-import debounce from "./bounceUtil";
+import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../App/Store";
+import debounce from "lodash/debounce";
+import { PersonalInformation, PersonalInformationPropertyOptions, setPersonalInformation } from "../App/PersonalInformationSlice";
+import useDidMountEffect from "../hooks/useDidMountHook";
+import React from "react";
 
-export default function FormElement({ name, label, options = false }: { name: keyof Data["personalInformation"]; label: string; options?: boolean }) {
-  const [hide, setHideBtn] = useState<boolean>(true);
-  const internalUseInput = useRef<HTMLInputElement>(null);
-  const hideInput = useRef<HTMLInputElement>(null);
-  const textInput = useRef<HTMLInputElement>(null);
-  const dispatch = useDispatch();
-  const updateData = () => {
-    dispatch(
-      setPersonalProp({
-        propName: name,
-        value: textInput.current?.value || "",
-        internalUse: internalUseInput.current?.checked,
-        show: !hideInput?.current?.checked,
-      })
-    );
-  };
-  const debounceUpdateData = debounce(updateData);
+interface props {
+  name: keyof PersonalInformation;
+  label: string;
+  options?: boolean;
+}
+export default function FormElement({ name, label, options = false }: props) {
+  const property: any = useAppSelector((state) => state.personalInformation[name]);
+  const [text, setText] = useState<string>(property.value || "");
+  const [hide, setHide] = useState<boolean>(!property.show);
+  const [internalUse, setInternalUse] = useState<boolean>(property.internalUse);
+
+  const dispatch = useAppDispatch();
+  const debounceUpdateState = React.useCallback(
+    debounce((payload: { propName: keyof PersonalInformation; options: PersonalInformationPropertyOptions }) => {
+      dispatch(setPersonalInformation(payload));
+    }, 250),
+    []
+  );
+
+  useDidMountEffect(() => {
+    debounceUpdateState({ propName: name, options: { value: text, internalUse: internalUse, show: !hide } });
+  }, [text, hide, internalUse]);
 
   return (
     <div className="formElement">
       <label htmlFor={name}>{label}</label>
       {options && (
         <div className="options">
-          <input type="checkbox" id={`${name}InternalUse`} ref={internalUseInput} onClick={updateData} />
+          <input
+            type="checkbox"
+            id={`${name}InternalUse`}
+            defaultChecked={internalUse}
+            onClick={() => {
+              setInternalUse((prev) => !prev);
+            }}
+          />
           <label htmlFor={`${name}InternalUse`}>Internal Use</label>
           <input
             type="checkbox"
             id={`${name}Hide`}
-            ref={hideInput}
+            defaultChecked={hide}
             onClick={() => {
-              setHideBtn((prev) => !prev);
-              updateData();
+              setHide((prev) => !prev);
             }}
           />
           <label htmlFor={`${name}Hide`} className={`${!hide && "active"}`}>
@@ -44,7 +57,14 @@ export default function FormElement({ name, label, options = false }: { name: ke
           <label htmlFor={`${name}Hide`}>{hide ? "Hide" : "Show"}</label>
         </div>
       )}
-      <input type="text" id={name} ref={textInput} onChange={debounceUpdateData} />
+      <input
+        type="text"
+        id={name}
+        value={text}
+        onChange={({ target }) => {
+          setText(target.value);
+        }}
+      />
     </div>
   );
 }
