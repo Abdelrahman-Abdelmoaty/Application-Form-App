@@ -174,10 +174,7 @@ export const DataSlice = createSlice({
       }
     },
     setCustomizedQuestions: (state: State, action: PayloadAction<{ question: Question; delete: boolean }>) => {
-      const qs = state.data.customisedQuestions;
-      console.log(current(qs));
-
-      let filteredData = qs.filter((q) => q.id != action.payload.question.id);
+      let filteredData = state.data.customisedQuestions.filter((q) => q.id != action.payload.question.id);
       if (!action.payload.delete) {
         return { ...state, data: { ...state.data, customisedQuestions: [...filteredData, action.payload.question] } };
       } else {

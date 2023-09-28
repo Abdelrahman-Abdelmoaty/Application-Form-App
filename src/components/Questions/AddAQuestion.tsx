@@ -4,6 +4,8 @@ import Paragraph from "./Paragraph";
 import MultipleChoice from "./MultipleChoice";
 import uuid from "react-uuid";
 import { Question } from "../../App/DataSlice";
+import YesNo from "./YesNo";
+import ShortAnswer from "./ShortAnswer";
 
 export default function AddAQuestion({ data, setter }: { data: Question[]; setter: Dispatch<SetStateAction<{ question: Question; delete: boolean }>> }) {
   let oldQuestions: JSX.Element[] = Object.keys(data).map((idx: any) => {
@@ -11,20 +13,35 @@ export default function AddAQuestion({ data, setter }: { data: Question[]; sette
     switch (question.type) {
       case "Paragraph":
         return <Paragraph key={uuid()} setter={setter} data={question} />;
+      case "MultipleChoice":
+        return <MultipleChoice key={uuid()} setter={setter} data={question} />;
+      case "YesNo":
+        return <YesNo key={uuid()} setter={setter} data={question} />;
+      case "ShortAnswer":
+        return <ShortAnswer key={uuid()} setter={setter} data={question} />;
 
       default:
         return <></>;
     }
   });
   const [questions, setQuestions] = useState<JSX.Element[]>(oldQuestions);
-  const selection = useRef<HTMLSelectElement>(null);
 
+  const selection = useRef<HTMLSelectElement>(null);
   function addNewQuestion() {
     const value = selection.current?.value;
     const ID = uuid();
     switch (value) {
       case "Paragraph":
         setQuestions((prev) => [...prev, <Paragraph key={ID} setter={setter} data={{ id: ID, type: "Paragraph", question: "", choices: [], maxChoice: 0, disqualify: false, other: false }} />]);
+        break;
+      case "MultipleChoice":
+        setQuestions((prev) => [...prev, <MultipleChoice key={ID} setter={setter} data={{ id: ID, type: "MultipleChoice", question: "", choices: [], maxChoice: 0, disqualify: false, other: false }} />]);
+        break;
+      case "YesNo":
+        setQuestions((prev) => [...prev, <YesNo key={ID} setter={setter} data={{ id: ID, type: "YesNo", question: "", choices: [], maxChoice: 0, disqualify: false, other: false }} />]);
+        break;
+      case "ShortAnswer":
+        setQuestions((prev) => [...prev, <ShortAnswer key={ID} setter={setter} data={{ id: ID, type: "ShortAnswer", question: "", choices: [], maxChoice: 0, disqualify: false, other: false }} />]);
         break;
     }
   }
@@ -41,7 +58,7 @@ export default function AddAQuestion({ data, setter }: { data: Question[]; sette
           <option value="">--Please choose an option--</option>
           <option value="Paragraph">Paragraph</option>
           <option value="ShortAnswer">Short answer</option>
-          <option value="Yes/no">Yes/No</option>
+          <option value="YesNo">Yes/No</option>
           <option value="Dropdown">Dropdown</option>
           <option value="MultipleChoice">Multiple choice</option>
           <option value="Date">Date</option>

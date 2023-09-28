@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction, useMemo, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
 import uuid from "react-uuid";
-import { deleteQuestion, setQuestions } from "../../App/DataSlice";
+import { Question } from "../../App/DataSlice";
 
 function Choice({ text, setChoicesText }: { text: string; setChoicesText: Dispatch<SetStateAction<string[]>> }) {
   const [input, setInput] = useState<string>(text);
@@ -30,7 +29,7 @@ function Choice({ text, setChoicesText }: { text: string; setChoicesText: Dispat
   );
 }
 
-export default function MultipleChoice({ type }: { type: string }) {
+export default function MultipleChoice({ data, setter }: { data: Question; setter: Dispatch<SetStateAction<{ question: Question; delete: boolean }>> }) {
   const question = useRef<HTMLInputElement>(null);
   const maxChoice = useRef<HTMLInputElement>(null);
   const [input, setInput] = useState<string>("");
@@ -42,23 +41,14 @@ export default function MultipleChoice({ type }: { type: string }) {
   const addChoice = () => {
     setChoicesText((prev) => [...prev, input]);
     setChoices((prev) => [...prev, <Choice key={uuid()} text={input} setChoicesText={setChoicesText} />]);
+    setInput("");
   };
-  const dispatch = useDispatch();
   const handleSave = () => {
-    const newQuestion = {
-      id: questionId,
-      type: "MultipleChoice",
-      question: question.current?.value || "",
-      choices: choicesText,
-      maxChoice: parseInt(maxChoice.current?.value || "") || 0,
-      disqualify: false,
-      other: false,
-    };
-    dispatch(setQuestions({ type, newQuestion }));
+    setter({ question: { id: questionId, type: data.type, question: question.current?.value || "", choices: choicesText, maxChoice: parseInt(maxChoice.current?.value || "") || 0, disqualify: false, other: false }, delete: false });
   };
   const handleDelete = () => {
     setRemove(true);
-    dispatch(deleteQuestion({ type, questionId }));
+    setter({ question: { id: questionId, type: data.type, question: question.current?.value || "", choices: choicesText, maxChoice: parseInt(maxChoice.current?.value || "") || 0, disqualify: false, other: false }, delete: true });
   };
   return (
     <>
