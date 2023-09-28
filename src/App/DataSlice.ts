@@ -1,6 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { reject } from "lodash";
 import uuid from "react-uuid";
 
 export interface State {
