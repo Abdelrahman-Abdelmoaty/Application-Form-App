@@ -258,7 +258,7 @@ export const sendData = createAsyncThunk("State/sendData", async (_arg, { getSta
   }
 });
 
-export const fetchData = createAsyncThunk("State/fetchData", async (_arg, { getState }) => {
+export const fetchData = createAsyncThunk("State/fetchData", async () => {
   try {
     const response = await axios.get("http://127.0.0.1:4010/api/39.93939846974685/programs/at/application-form");
     const data = await response.data.data.attributes;
