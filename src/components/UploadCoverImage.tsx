@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import "../App.css";
 import { useAppDispatch, useAppSelector } from "../App/Store";
-import { setCoverImage } from "../App/Draft/CoverImageSlice";
+import { setCoverImageUrl } from "../App/DataSlice";
 
 function UploadProfileImage() {
   const dispatch = useAppDispatch();
@@ -20,7 +20,7 @@ function UploadProfileImage() {
       }
       const imageURL = URL.createObjectURL(selectedImage);
       setUploadedImageUrl(imageURL);
-      dispatch(setCoverImage(imageURL.slice(imageURL.indexOf(":") + 1)));
+      dispatch(setCoverImageUrl(imageURL.slice(imageURL.indexOf(":") + 1)));
     }
   };
   const handleRemove = () => {
