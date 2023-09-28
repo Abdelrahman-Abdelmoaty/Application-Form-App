@@ -3,20 +3,19 @@ import "./AddAQuestion.css";
 import Paragraph from "./Paragraph";
 import MultipleChoice from "./MultipleChoice";
 import uuid from "react-uuid";
-import { Question } from "../../App/PersonalInformationSlice";
+import { Question } from "../../App/DataSlice";
 
 export default function AddAQuestion({ data, setter }: { data: Question[]; setter: Dispatch<SetStateAction<{ question: Question; delete: boolean }>> }) {
-  let oldQuestions: JSX.Element[] = [];
-  data.length &&
-    (oldQuestions = data.map((question) => {
-      switch (question.type) {
-        case "Paragraph":
-          return <Paragraph key={question.id} setter={setter} data={question} />;
+  let oldQuestions: JSX.Element[] = Object.keys(data).map((idx: any) => {
+    const question = data[idx];
+    switch (question.type) {
+      case "Paragraph":
+        return <Paragraph key={uuid()} setter={setter} data={question} />;
 
-        default:
-          return <></>;
-      }
-    }));
+      default:
+        return <></>;
+    }
+  });
   const [questions, setQuestions] = useState<JSX.Element[]>(oldQuestions);
   const selection = useRef<HTMLSelectElement>(null);
 
@@ -29,7 +28,7 @@ export default function AddAQuestion({ data, setter }: { data: Question[]; sette
         break;
     }
   }
-
+  const ID = uuid();
   return (
     <div className="addAQuestion">
       <p className="font-semibold text-2xl mb-2">Questions</p>
@@ -37,8 +36,8 @@ export default function AddAQuestion({ data, setter }: { data: Question[]; sette
       <div className="question-section">{questions}</div>
       {/* #################### */}
       <div className="question-selection">
-        <label>Type</label>
-        <select name="questions" className="question-select" ref={selection}>
+        <label htmlFor={ID}>Type</label>
+        <select id={ID} name="questions" className="question-select" ref={selection}>
           <option value="">--Please choose an option--</option>
           <option value="Paragraph">Paragraph</option>
           <option value="ShortAnswer">Short answer</option>

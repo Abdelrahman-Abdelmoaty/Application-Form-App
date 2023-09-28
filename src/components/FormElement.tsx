@@ -2,9 +2,9 @@ import "./FormElement.css";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../App/Store";
 import debounce from "lodash/debounce";
-import { PersonalInformation, PersonalInformationPropertyOptions, setPersonalInformation } from "../App/PersonalInformationSlice";
 import useDidMountEffect from "../hooks/useDidMountHook";
 import React from "react";
+import { PersonalInformation, PersonalInformationPropertyOptions, setPersonalInformation } from "../App/DataSlice";
 
 interface props {
   name: keyof PersonalInformation;
@@ -12,10 +12,10 @@ interface props {
   options?: boolean;
 }
 export default function FormElement({ name, label, options = false }: props) {
-  const property: any = useAppSelector((state) => state.personalInformation[name]);
+  const property: any = useAppSelector((state) => state.data.data.personalInformation);
   const [text, setText] = useState<string>(property.value || "");
   const [hide, setHide] = useState<boolean>(!property.show);
-  const [internalUse, setInternalUse] = useState<boolean>(property.internalUse);
+  const [internalUse, setInternalUse] = useState<boolean>(!!property.internalUse);
 
   const dispatch = useAppDispatch();
   const debounceUpdateState = React.useCallback(

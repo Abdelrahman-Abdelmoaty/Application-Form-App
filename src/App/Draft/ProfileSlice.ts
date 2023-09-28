@@ -1,7 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Question } from "./PersonalInformationSlice";
+import { useDispatch } from "react-redux";
 
-interface Profile {
+export interface Profile {
   education: {
     mandatory: boolean;
     show: boolean;
@@ -32,7 +33,7 @@ const PROFILE_INITAL_STATE: Profile = {
   },
   profileQuestions: [],
 };
-interface ProfileOptions {
+export interface ProfileOptions {
   mandatory: boolean;
   show: boolean;
 }

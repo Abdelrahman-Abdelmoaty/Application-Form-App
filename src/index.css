@@ -7,10 +7,6 @@
   font-family: "Poppins", sans-serif;
 }
 
-body {
-  margin-bottom: 1000px;
-}
-
 label:hover {
   cursor: pointer;
 }

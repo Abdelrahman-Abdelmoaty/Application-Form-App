@@ -1,11 +1,11 @@
 import { useRef, useState } from "react";
 import "../App.css";
 import { useAppDispatch, useAppSelector } from "../App/Store";
-import { setCoverImage } from "../App/CoverImageSlice";
+import { setCoverImage } from "../App/Draft/CoverImageSlice";
 
 function UploadProfileImage() {
   const dispatch = useAppDispatch();
-  const imageUrl = useAppSelector((state) => state.coverImage);
+  const imageUrl = useAppSelector((state) => state.data.data.coverImage);
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string>(imageUrl);
   const uploadBtn = useRef<HTMLInputElement>(null);
   const handleUpload = () => {

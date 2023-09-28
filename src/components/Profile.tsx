@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./FormElement.css";
 import { useAppDispatch, useAppSelector } from "../App/Store";
-import { setProfileOptions, setProfileQuestions } from "../App/ProfileSlice";
+import { setProfileOptions, setProfileQuestions } from "../App/DataSlice";
 import AddAQuestion from "./Questions/AddAQuestion";
 import useDidMountEffect from "../hooks/useDidMountHook";
-import { Question } from "../App/PersonalInformationSlice";
+import { Question } from "../App/DataSlice";
 
 export default function Profile() {
-  const data: any = useAppSelector((state) => state.profile);
+  const data: any = useAppSelector((state) => state.data.data.profile);
   const [edu, setEdu] = useState<{ mandatory: boolean; show: boolean }>(data.education);
   const [exp, setExp] = useState<{ mandatory: boolean; show: boolean }>(data.experience);
   const [res, setRes] = useState<{ mandatory: boolean; show: boolean }>(data.resume);
