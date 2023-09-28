@@ -1,4 +1,4 @@
-import { PayloadAction, createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import uuid from "react-uuid";
 
@@ -240,7 +240,7 @@ interface RootState {
   };
 }
 
-export const sendData = createAsyncThunk("State/sendData", async (arg, { getState }) => {
+export const sendData = createAsyncThunk("State/sendData", async (_arg, { getState }) => {
   try {
     const data = (getState() as RootState).data.data;
 
