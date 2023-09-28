@@ -1,5 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { reject } from "lodash";
 import uuid from "react-uuid";
 
 export interface State {
@@ -215,7 +216,7 @@ export const DataSlice = createSlice({
     });
     builder.addCase(fetchData.rejected, (state: State) => {
       state.error = true;
-      return { ...state };
+      console.log(Error("Error With Fetching Data"));
     });
     builder.addCase(sendData.pending, (_state: State) => {
       console.log("Pending Sending Data....");
@@ -257,8 +258,12 @@ export const sendData = createAsyncThunk("State/sendData", async (_arg, { getSta
   }
 });
 
-export const fetchData = createAsyncThunk("State/fetchData", async () => {
-  const response = await axios.get("http://127.0.0.1:4010/api/39.93939846974685/programs/at/application-form");
-  const data = await response.data.data.attributes;
-  return data;
+export const fetchData = createAsyncThunk("State/fetchData", async (_arg, { getState }) => {
+  try {
+    const response = await axios.get("http://127.0.0.1:4010/api/39.93939846974685/programs/at/application-form");
+    const data = await response.data.data.attributes;
+    return data;
+  } catch {
+    console.log(Error("Error Fetching Data Reseting All Data..."));
+  }
 });

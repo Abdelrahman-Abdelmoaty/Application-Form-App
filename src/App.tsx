@@ -10,11 +10,12 @@ import { useAppDispatch, useAppSelector } from "./App/Store.ts";
 import { fetchData, sendData } from "./App/DataSlice.ts";
 
 function App() {
-  const isLoading = useAppSelector((state) => state.data.isLoading);
+  // const isLoading = useAppSelector((state) => state.data.isLoading);
+  const isLoading = false;
   const [finished, setFinished] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(fetchData());
+    // dispatch(fetchData());
   }, []);
   return (
     <>
