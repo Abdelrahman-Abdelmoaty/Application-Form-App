@@ -245,7 +245,7 @@ export const sendData = createAsyncThunk("State/sendData", async (_arg, { getSta
     const data = (getState() as RootState).data.data;
 
     const response = await axios.put(
-      "http://127.0.0.1:4010/api/386.70804606338396/programs/eos/application-form",
+      "https://first-api-bd5f9-default-rtdb.europe-west1.firebasedatabase.app/put.json",
       {
         data: { id: uuid(), type: "applicationForm", attributes: data },
       },
@@ -259,7 +259,7 @@ export const sendData = createAsyncThunk("State/sendData", async (_arg, { getSta
 
 export const fetchData = createAsyncThunk("State/fetchData", async () => {
   try {
-    const response = await axios.get("http://127.0.0.1:4010/api/39.93939846974685/programs/at/application-form");
+    const response = await axios.get("https://first-api-bd5f9-default-rtdb.europe-west1.firebasedatabase.app/get.json");
     const data = await response.data.data.attributes;
     return data;
   } catch {

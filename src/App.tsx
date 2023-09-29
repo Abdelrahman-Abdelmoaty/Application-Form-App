@@ -7,17 +7,16 @@ import Profile from "./components/Profile.tsx";
 import AdditionalQuestions from "./components/AdditionalQuestions.tsx";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "./App/Store.ts";
-// import { useAppSelector } from "./App/Store.ts";
+import { useAppSelector } from "./App/Store.ts";
 // import { fetchData } from "./App/DataSlice.ts";
-import { sendData } from "./App/DataSlice.ts";
+import { fetchData, sendData } from "./App/DataSlice.ts";
 
 function App() {
-  // const isLoading = useAppSelector((state) => state.data.isLoading);
-  const isLoading = false;
+  const isLoading = useAppSelector((state) => state.data.isLoading);
   const [finished, setFinished] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    // dispatch(fetchData());
+    dispatch(fetchData());
   }, []);
   return (
     <>
